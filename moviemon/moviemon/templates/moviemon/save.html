@@ -4,9 +4,17 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/save.css' %}">
 {% endblock style %}
 
 {% block content %}
-<h1>Save</h1>
-<p>comming soon...</p>
+<section class="slots">
+	<h1 class="slots__title">Save</h1>
+
+	<ul class="save_list">
+	  <li class="save_slot">Save slot A</li>
+	  <li class="save_slot">Save slot B</li>
+	  <li class="save_slot">Save slot C</li>
+	</ul>
+  </section>
 {% endblock content %}
