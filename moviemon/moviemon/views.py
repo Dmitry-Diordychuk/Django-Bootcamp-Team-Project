@@ -49,7 +49,7 @@ def worldmap(request):
         game_manager.check_encounter()
 
     context = {
-        'map': game_manager.get_map(),
+        'frame': game_manager.get_frame(),
         'movieballs': game_manager.player_movieballs,
         'isMoviemonEncountered': game_manager.isMoviemonEncountered, # game_manager.check_encounter() change this varible
         'isMovieballFound': game_manager.isMovieballFound            # game_manager.check_encounter() change this varible

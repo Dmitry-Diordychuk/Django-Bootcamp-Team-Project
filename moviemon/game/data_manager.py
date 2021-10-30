@@ -22,6 +22,8 @@ class DataManager():
 		self.isMoviemonEncountered = False
 		self.isMovieballFound = False
 
+		self.frame_size = [9, 7]
+
 	def __str__(self):
 		return """
 Player position: {0}
@@ -99,16 +101,39 @@ Is data loaded?: {6}
 		return None
 
 
-	def get_map(self):
-		map = []
+	def __calculate_frame_index(self, x_or_y):
+		offset = int((self.frame_size[x_or_y] - 1) / 2)
+		left_index = self.player_position[x_or_y] - offset
+		right_index = self.player_position[x_or_y] + offset
+
+		if (left_index < 0):
+			right_index += -left_index
+			left_index = 0
+		elif (right_index > self.grid_size[x_or_y] - 1):
+			left_index += self.grid_size[x_or_y] - 1 - right_index
+			right_index = self.grid_size[x_or_y] - 1
+		print(left_index, right_index)
+		return left_index, right_index
+
+
+	def get_frame(self):
+		gridmap = []
 		for y in range(self.grid_size[1]):
-			map.append([])
+			gridmap.append([])
 			for x in range(self.grid_size[0]):
 				if [x, y] == self.player_position:
-					map[y].append(1)
+					gridmap[y].append(1)
 				else:
-					map[y].append(0)
-		return map
+					gridmap[y].append(0)
+
+		left_index, right_index = self.__calculate_frame_index(1)
+		frame = gridmap[left_index:right_index + 1]
+
+		left_index, right_index = self.__calculate_frame_index(0)
+		for i in range(len(frame)):
+			frame[i] = frame[i][left_index:right_index + 1]
+
+		return frame
 
 
 	def check_encounter(self):

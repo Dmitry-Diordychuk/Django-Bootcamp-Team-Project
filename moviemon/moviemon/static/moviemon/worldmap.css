@@ -1,5 +1,28 @@
 .movieballs {
+	color: black;
 	position: absolute;
 	left: 5%;
 	top: 0%;
+}
+
+.table-grid {
+	margin: auto;
+	width: 50%;
+	padding-top: 5px;
+	table-layout: fixed
+}
+
+.grid-node {
+	background-image: url(grass.png);
+
+	width:46px;
+	min-width:46px;
+	max-width: 46px;
+	height:46px;
+	min-height:46px;
+	max-height: 46px;
+}
+
+.person {
+	position: relative;
 }

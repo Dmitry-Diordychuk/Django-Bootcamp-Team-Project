@@ -6,7 +6,6 @@
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/worldmap.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'moviemon/grid.css' %}">
 {% endblock style %}
 
 {% block content %}
@@ -14,7 +13,7 @@
 <p class="movieballs">Movieballs: {{ movieballs }}</p>
 
 <table class="table-grid">
-	{% for row in map %}
+	{% for row in frame %}
 	<tr class="grid-row">
 		{% for val in row %}
 		<td class="grid-node">
