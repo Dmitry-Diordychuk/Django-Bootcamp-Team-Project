@@ -46,14 +46,11 @@ def worldmap(request):
             elif request.POST.get('down.x'):
                 game_manager.go('down')
 
-        # TODO: refactoring magic method
-        game_manager.check_encounter()
-
     context = {
         'frame': game_manager.get_frame(),
         'movieballs': game_manager.player_movieballs,
-        'isMoviemonEncountered': game_manager.isMoviemonEncountered, # game_manager.check_encounter() change this varible
-        'isMovieballFound': game_manager.isMovieballFound            # game_manager.check_encounter() change this varible
+        'isMoviemonEncountered': game_manager.isMoviemonEncountered,
+        'isMovieballFound': game_manager.isMovieballFound
     }
     return render(request, 'moviemon/worldmap.html', context)
 
@@ -61,20 +58,34 @@ def worldmap(request):
 def battle(request, moviemon_id=None):
     movie = game_manager.get_movie(moviemon_id)
     movie_poster_url = movie["Poster"]
-    logger.info(movie)
 
     if request.method == "POST":
-        if request.POST.get('A'):
-            pass
-        elif request.POST.get('B'):
-            return redirect('/worldmap')
+        if game_manager.isMovieballThrown:
+            if game_manager.isMoviemonCatched:
+                if request.POST.get('B'):
+                    game_manager.isMovieballThrown = False
+                    game_manager.isMoviemonCatched = False
+                    return redirect('/worldmap')
+            else:
+                if request.POST.get('A'):
+                    game_manager.isMovieballThrown = False
+                    game_manager.isMoviemonCatched = False
+        else:
+            if request.POST.get('A') and game_manager.player_movieballs > 0:
+                game_manager.isMovieballThrown = True
+                if game_manager.throw_movieball(moviemon_id):
+                    game_manager.isMoviemonCatched = True
+            elif request.POST.get('B'):
+                return redirect('/worldmap')
 
     context = {
         "moviemon_img_url": movie_poster_url,
         "player_strength": game_manager.player_strength,
         "moviemon_strength": round(float(movie["imdbRating"])),
         "movieballs": game_manager.player_movieballs,
-        # "isMovieballThrown": game_manager.isMovieballThrown
+        'winrate': game_manager.calculate_chance(moviemon_id),
+        "isMovieballThrown": game_manager.isMovieballThrown,
+        "isMoviemonCatched": game_manager.isMoviemonCatched
     }
     return render(request, 'moviemon/battle.html', context)
 
