@@ -1,0 +1,170 @@
+.desktop {
+	background-color:#ffffff;
+	height: 1024px;
+	width: 1440px;
+}
+
+.gameboy {
+	background-image: url(rectangle-1.png);
+	height: 908px;
+	width: 608px;
+	position: relative;
+	left: 416px;
+	top: 62px;
+}
+
+.title {
+	color: #000000;
+	font-family: "Gill Sans", sans-serif;
+	font-size: 42;
+	font-weight: 400;
+	height: 20px;
+	left: 190px;
+	position: absolute;
+	text-align: center;
+	top: 424px;
+	width: 209px;
+}
+
+.align-text {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.start-select-buttons {
+	height: 62px;
+	left: 155px;
+	position: absolute;
+	top: 774px;
+	width: 296px;
+}
+
+.start {
+	font-family: "Gill Sans", sans-serif;
+	height: 51px;
+	left: 0;
+	letter-spacing: 0;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 209px;
+}
+
+.select {
+	font-family: "Gill Sans", sans-serif;
+	height: 51px;
+	left: 87px;
+	letter-spacing: 0;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 209px;
+}
+
+.selectbutton {
+	background-color: #000000;
+	border-radius: 100px;
+	height: 23px;
+	left: 157px;
+	position: absolute;
+	top: 39px;
+	width: 70px;
+}
+
+.startbutton {
+	background-color: #000000;
+	border-radius: 100px;
+	height: 23px;
+	left: 70px;
+	position: absolute;
+	top: 39px;
+	width: 70px;
+}
+
+.screen {
+	background-color:#c4c4c4;
+	border-radius: 10px;
+	height: 360px;
+	left: 34px;
+	mix-blend-mode: screen;
+	position: absolute;
+	top: 40px;
+	width: 540px;
+}
+
+.pads {
+	height: 169px;
+	left: 70px;
+	position: absolute;
+	top: 524px;
+	width: 169px;
+}
+
+.leftpad {
+	height: 53px;
+	left: 0;
+	position: absolute;
+	top: 58px;
+	width: 79px;
+}
+
+.rightpad {
+	height: 53px;
+	left: 90px;
+	position: absolute;
+	top: 58px;
+	width: 79px;
+}
+
+.downpad {
+	height: 79px;
+	left: 58px;
+	position: absolute;
+	top: 90px;
+	width: 53px;
+}
+
+.uppad {
+	height: 79px;
+	left: 58px;
+	position: absolute;
+	top: 0;
+	width: 53px;
+}
+
+.abutton {
+	background-color:#753a3a;
+	border-radius: 54px;
+	height: 108px;
+	left: 337px;
+	position: absolute;
+	top: 609px;
+	width: 108px;
+}
+
+.bbutton {
+	background-color:#583a75;
+	border-radius: 54px;
+	height: 108px;
+	left: 445px;
+	position: absolute;
+	top: 501px;
+	width: 108px;
+}
+
+.screen a {
+	display: contents;
+	text-decoration: none;
+}
+
+.container-center-horizontal {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.container-center-horizontal > * {
+	flex-shrink: 0;
+}

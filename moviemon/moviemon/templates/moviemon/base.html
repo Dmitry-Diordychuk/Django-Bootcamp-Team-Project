@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Title{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'moviemon/gameboy.css' %}">
+    {% block style %}
+    {% endblock style %}
+</head>
+<body>
+    <div class="container-center-horizontal">
+        <div class="desktop">
+          <div class="gameboy">
+            <h1 class="title align-text">Moviemon</h1>
+            <div class="screen">
+                {% block content %}
+                <p>Error</p>
+                {% endblock content %}
+            </div>
+            <div class="pads">
+              <form method="POST" action="">
+                {% csrf_token %}
+                <input
+                    class="leftpad"
+                    type="image"
+                    src="{% static 'moviemon/left-pad.svg' %}"
+                    name="left"
+                />
+                <input
+                    class="rightpad"
+                    type="image"
+                    src="{% static 'moviemon/right-pad.svg' %}"
+                    name="right"
+                />
+                <input
+                    class="downpad"
+                    type="image"
+                    src="{% static 'moviemon/down-pad.svg' %}"
+                    name="down"
+                />
+                <input
+                    class="uppad"
+                    type="image"
+                    src="{% static 'moviemon/up-pad.svg' %}"
+                    name="up"
+                />
+              </form>
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input class="abutton" type="submit" name="A" value="A"/>
+                <input class="bbutton" type="submit" name="B" value="B"/>
+            </form>
+            <div class="start-select-buttons">
+                <div class="start align-text">Start</div>
+                <div class="select align-text">Select</div>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input class="selectbutton" type="submit" name="select"/>
+                    <input class="startbutton" type="submit" name="start"/>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

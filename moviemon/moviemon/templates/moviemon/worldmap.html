@@ -1,0 +1,42 @@
+{% extends "moviemon/base.html" %}
+{% load static %}
+
+{% block title %}Title screen{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/worldmap.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/grid.css' %}">
+{% endblock style %}
+
+{% block content %}
+
+<p class="movieballs">Movieballs: {{ movieballs }}</p>
+
+<table class="table-grid">
+	{% for row in map %}
+	<tr class="grid-row">
+		{% for val in row %}
+		<td class="grid-node">
+			{% if val == 1 %}
+			<img class="person" src="{% static 'moviemon/person.png' %}"/>
+			{% endif %}
+		</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+{% if isMoviemonEncountered %}
+	<div class="modal">
+		<h1 class="message">Moviemon appeared!</h1>
+		<h1 class="message">Catch: Press A</h1>
+	</div>
+{% elif isMovieballFound %}
+	<div class="modal">
+		<h1 class="message">Found movieball!</h1>
+		<h1 class="message">Grab: Press A</h1>
+	</div>
+{% endif %}
+
+{% endblock content %}
