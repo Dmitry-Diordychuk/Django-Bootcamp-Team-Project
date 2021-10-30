@@ -21,6 +21,8 @@ class DataManager():
 		self.loaded_data = data
 		self.isMoviemonEncountered = False
 		self.isMovieballFound = False
+		self.isMovieballThrown = False
+		self.isMoviemonCatched = False
 		self.session = requests.session()
 
 		self.frame_size = [9, 7]
@@ -55,6 +57,8 @@ Is data loaded?: {6}
 
 
 	def get_random_movie(self):
+		if len(self.film_ids) == 0:
+			raise self.DataManagerException("Lack of moviemons")
 		all_movies = self.film_ids
 		captured = self.captured_moviemons
 		not_captured = [m for m in all_movies if m not in captured]
@@ -134,10 +138,11 @@ Is data loaded?: {6}
 		return frame
 
 
-	def check_encounter(self):
-		if random.randrange(0, 50, 1) < 10:
+	def __check_encounter(self):
+		if random.randrange(0, 100, 1) < 10:
 			if random.randrange(0, 2, 1) == 0:
-				self.isMoviemonEncountered = True
+				if len(self.film_ids) != 0:
+					self.isMoviemonEncountered = True
 			else:
 				self.isMovieballFound = True
 
@@ -146,20 +151,50 @@ Is data loaded?: {6}
 		if direction == 'left':
 			if self.player_position[0] > 0:
 				self.player_position[0] -= 1
+				self.__check_encounter()
 		elif direction == 'right':
 			if self.player_position[0] < self.grid_size[0] - 1:
 				self.player_position[0] += 1
+				self.__check_encounter()
 		elif direction == 'up':
 			if self.player_position[1] > 0:
 				self.player_position[1] -= 1
+				self.__check_encounter()
 		elif direction == 'down':
 			if self.player_position[1] < self.grid_size[1] - 1:
 				self.player_position[1] += 1
+				self.__check_encounter()
 
 
 	def pick_movieball(self):
 		self.player_movieballs += 1
 
+
+	def calculate_chance(self, moviemon_id):
+		moviemon = self.get_movie(moviemon_id)
+		chance = 50 - (round(float(moviemon["imdbRating"])) * 10) \
+					+ (self.player_strength * 5)
+		if chance < 1:
+			chance = 1
+		elif chance > 90:
+			chance = 90
+		return chance
+
+
+	def throw_movieball(self, target_id):
+		if self.player_movieballs > 0:
+			self.player_movieballs -= 1
+		else:
+			raise self.DataManagerException("Lack of movieballs")
+
+		chance = self.calculate_chance(target_id)
+		if random.randint(0, 100) < chance:
+			self.film_ids.remove(target_id)
+			self.captured_moviemons.append(self.get_movie(target_id))
+			self.player_strength += 1
+			return True
+
+		return False
 
 
 
@@ -169,7 +204,7 @@ if __name__ == '__main__':
 	print(manager)
 
 	manager.player_position = [4, 5]
-	manager.captured_moviemons.append(manager.film_ids[4])
+	manager.captured_moviemons.append(manager.get_movie(manager.film_ids[4]))
 	print(manager)
 
 	saved_obj = manager.dump()

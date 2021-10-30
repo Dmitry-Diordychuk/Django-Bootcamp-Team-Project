@@ -9,8 +9,8 @@
 {% block content %}
 <h1>Moviemons list</h1>
 <ol>
-    {% for name, id in moviedex %}
-    <li><a href="/moviemon/detail?id={{id}}">{{name}}</a></li>
+    {% for name, imdb in moviedex %}
+    <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
     {% endfor %}
 </ol>
 {% endblock content %}

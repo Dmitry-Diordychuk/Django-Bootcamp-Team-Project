@@ -9,9 +9,10 @@
 {% block content %}
 <h1>Detail</h1>
 <ul>
-    {% for a, b in moviemon.items %}
+    {% for a, b in moviemon.0.items %}
     <li>{{a}} : {{b}}</li>
     {% endfor %}
+
 </ul>
 
 
