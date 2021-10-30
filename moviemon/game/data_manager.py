@@ -21,6 +21,7 @@ class DataManager():
 		self.loaded_data = data
 		self.isMoviemonEncountered = False
 		self.isMovieballFound = False
+		self.session = requests.session()
 
 		self.frame_size = [9, 7]
 
@@ -61,13 +62,11 @@ Is data loaded?: {6}
 
 
 	def __request_movie(self, id):
-		return requests.get(
-			'http://www.omdbapi.com/',
-			{
+		params = {
 				'apikey': game_settings.APIKEY,
 				'i': id
-			}
-		).json()
+		}
+		return self.session.get('http://www.omdbapi.com/', params=params).json()
 
 
 	def __init_moviemons(self, film_ids):
@@ -136,7 +135,7 @@ Is data loaded?: {6}
 
 
 	def check_encounter(self):
-		if random.randrange(0, 100, 1) < 10:
+		if random.randrange(0, 50, 1) < 10:
 			if random.randrange(0, 2, 1) == 0:
 				self.isMoviemonEncountered = True
 			else:

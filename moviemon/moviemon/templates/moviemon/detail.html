@@ -8,5 +8,11 @@
 
 {% block content %}
 <h1>Detail</h1>
-<p>comming soon...</p>
+<ul>
+    {% for a, b in moviemon.items %}
+    <li>{{a}} : {{b}}</li>
+    {% endfor %}
+</ul>
+
+
 {% endblock content %}
