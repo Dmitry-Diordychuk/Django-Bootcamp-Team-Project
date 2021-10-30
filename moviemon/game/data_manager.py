@@ -23,6 +23,7 @@ class DataManager():
 		self.isMovieballFound = False
 		self.isMovieballThrown = False
 		self.isMoviemonCatched = False
+		self.session = requests.session()
 
 		self.frame_size = [9, 7]
 
@@ -65,13 +66,11 @@ Is data loaded?: {6}
 
 
 	def __request_movie(self, id):
-		return requests.get(
-			'http://www.omdbapi.com/',
-			{
+		params = {
 				'apikey': game_settings.APIKEY,
 				'i': id
-			}
-		).json()
+		}
+		return self.session.get('http://www.omdbapi.com/', params=params).json()
 
 
 	def __init_moviemons(self, film_ids):
@@ -189,11 +188,12 @@ Is data loaded?: {6}
 			raise self.DataManagerException("Lack of movieballs")
 
 		chance = self.calculate_chance(target_id)
-		if random.randint(0,100) < chance:
+		if random.randint(0, 100) < chance:
 			self.film_ids.remove(target_id)
-			self.captured_moviemons.append(target_id)
+			self.captured_moviemons.append(self.get_movie(target_id))
 			self.player_strength += 1
 			return True
+
 		return False
 
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
 	print(manager)
 
 	manager.player_position = [4, 5]
-	manager.captured_moviemons.append(manager.film_ids[4])
+	manager.captured_moviemons.append(manager.get_movie(manager.film_ids[4]))
 	print(manager)
 
 	saved_obj = manager.dump()

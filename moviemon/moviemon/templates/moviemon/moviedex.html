@@ -8,5 +8,9 @@
 
 {% block content %}
 <h1>Moviemons list</h1>
-<p>comming soon...</p>
+<ol>
+    {% for name, imdb in moviedex %}
+    <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
+    {% endfor %}
+</ol>
 {% endblock content %}

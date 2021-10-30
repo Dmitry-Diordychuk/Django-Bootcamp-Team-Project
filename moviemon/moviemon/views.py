@@ -91,12 +91,38 @@ def battle(request, moviemon_id=None):
 
 
 def moviedex(request):
-    context = {}
+    if request.POST.get('B'):
+        return redirect('/worldmap')
+
+    if len(game_manager.captured_moviemons) == 0:
+        moviemons = [("No Moviemons caught yet...go beat em all!", '0')]
+    else:
+        moviemons = [(moviemon["Title"], moviemon['imdbID']) for moviemon in game_manager.captured_moviemons]
+    context = {"moviedex": moviemons}
     return render(request, 'moviemon/moviedex.html', context)
 
 
 def detail(request):
-    context = {}
+    if request.method == "POST":
+        if request.POST.get('B'):
+            return redirect('/moviedex')
+    imdb = request.GET.get('imdb')
+    moviemon = {}
+    if imdb == '0':
+        return redirect('/worldmap')
+
+    for a in game_manager.captured_moviemons:
+        if a['imdbID'] == imdb:
+            moviemon = ({
+                'Title': a['Title'],
+                'Year': a['Year'],
+                'Genre': a['Genre'],
+                'Director': a['Director'],
+                'Actors': a['Actors'],
+                'Plot': a['Plot'],
+                'Country': a['Country']
+            }, a['Poster'])
+    context = {'moviemon': moviemon}
     return render(request, 'moviemon/detail.html', context)
 
 
