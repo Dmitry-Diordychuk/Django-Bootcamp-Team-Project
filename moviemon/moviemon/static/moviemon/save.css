@@ -1,0 +1,47 @@
+body {
+	font-family: "Tahoma", sans-serif;
+	font-size: 18px;
+	line-height: 25px;
+	color: #164a44;
+
+	background-color: #b2d9d0;
+}
+
+.slots__title {
+	margin: 50px 0 20px 0;
+
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.save_list {
+	margin: 0;
+	padding: 0;
+	margin-left: 30%;
+
+	list-style: none;
+}
+
+.save_slot {
+	transition: background-color 0.5s;
+	margin-bottom: 10px;
+	padding: 5px;
+
+	text-align: center;
+	border: 2px solid #b2d9d0;
+	border-radius: 10px;
+	cursor: move;
+	background-color: #dff2ef;
+
+	width: 50%;
+
+	transition: background-color 0.5s;
+}
+
+.save_slot:last-child {
+	margin-bottom: 0;
+}
+
+.selected {
+	opacity: 0.6;
+}

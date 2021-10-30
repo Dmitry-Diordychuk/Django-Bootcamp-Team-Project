@@ -197,7 +197,6 @@ Is data loaded?: {6}
 		return False
 
 
-
 if __name__ == '__main__':
 	manager = DataManager()
 	manager.load_default_settings()
