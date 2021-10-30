@@ -4,13 +4,23 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
 {% endblock style %}
 
 {% block content %}
 <h1>Moviemons list</h1>
 <ol>
-    {% for name, imdb in moviedex %}
-    <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
-    {% endfor %}
+    {% if moviedex|length == 0%}
+		<div class="modal">
+			<h1 class="message">No Moviemons caught yet...<br>
+                go beat em all!</h1>
+			<h1 class="message">Press B: go to worldmap</h1>
+		</div>
+	{% else %}
+        {% for name, imdb in moviedex %}
+        <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
+        {% endfor %}
+    {% endif %}
+
 </ol>
 {% endblock content %}

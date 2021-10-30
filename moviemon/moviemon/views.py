@@ -95,7 +95,7 @@ def moviedex(request):
         return redirect('/worldmap')
 
     if len(game_manager.captured_moviemons) == 0:
-        moviemons = [("No Moviemons caught yet...go beat em all!", '0')]
+        return render(request, 'moviemon/moviedex.html', {"moviedex": []})
     else:
         moviemons = [(moviemon["Title"], moviemon['imdbID']) for moviemon in game_manager.captured_moviemons]
     context = {"moviedex": moviemons}
@@ -108,8 +108,6 @@ def detail(request):
             return redirect('/moviedex')
     imdb = request.GET.get('imdb')
     moviemon = {}
-    if imdb == '0':
-        return redirect('/worldmap')
 
     for a in game_manager.captured_moviemons:
         if a['imdbID'] == imdb:

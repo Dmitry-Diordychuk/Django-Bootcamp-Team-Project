@@ -4,16 +4,24 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/detail.css' %}">
 {% endblock style %}
 
 {% block content %}
 <h1>Detail</h1>
-<ul>
-    {% for a, b in moviemon.0.items %}
-    <li>{{a}} : {{b}}</li>
-    {% endfor %}
+<div class="main-container">
+    <div class="text-container">
+        <ul>
+            {% for a, b in moviemon.0.items %}
+                <li>{{a}} : {{b}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="image-container">
+		<img class="image" src="{{ moviemon.1 }}"/>
+	</div>
+</div>
 
-</ul>
 
 
 {% endblock content %}
