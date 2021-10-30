@@ -94,9 +94,9 @@ Is data loaded?: {6}
 		return self.player_strength
 
 
-	def get_movie(self, moviemon_name):
+	def get_movie(self, moviemon_id):
 		for m in self.moviemons_info:
-			if m['Title'] == moviemon_name:
+			if m['imdbID'] == moviemon_id:
 				return m
 		return None
 
@@ -112,7 +112,6 @@ Is data loaded?: {6}
 		elif (right_index > self.grid_size[x_or_y] - 1):
 			left_index += self.grid_size[x_or_y] - 1 - right_index
 			right_index = self.grid_size[x_or_y] - 1
-		print(left_index, right_index)
 		return left_index, right_index
 
 

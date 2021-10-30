@@ -4,9 +4,42 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/battle.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
 {% endblock style %}
 
 {% block content %}
-<h1>Battle!</h1>
-<p>comming soon...</p>
+<div class="main-container">
+	<div class="container">
+		<div class="box">
+			<img class="image" src="{% static 'moviemon/person_battle.jpg' %}"/>
+			<p>Strength: {{ player_strength }}</p>
+		</div>
+		<div class="box">
+			<img class="image" src="{{ moviemon_img_url }}"/>
+			<p>Strength: {{ moviemon_strength }}</p>
+			<p>Winning rate: {{ winrate }} </p>
+		</div>
+	</div>
+	<div class="container">
+		<p>Movieballs: {{ movieballs }}</p>
+		<p>A - Launch movieball</p>
+		<p>B - Back to worldmap</p>
+	</div>
+</div>
+
+{% if isMovieballThrown %}
+	{% if isMoviemonCatched %}
+		<div class="modal">
+			<h1 class="message">You caught it!</h1>
+			<h1 class="message">Press A</h1>
+		</div>
+	{% else %}
+		<div class="modal">
+			<h1 class="message">You missed!</h1>
+			<h1 class="message">Press A</h1>
+		</div>
+	{% endif %}
+{% endif %}
+
 {% endblock content %}

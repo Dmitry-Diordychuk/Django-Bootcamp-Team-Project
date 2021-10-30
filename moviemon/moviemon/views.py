@@ -30,7 +30,8 @@ def worldmap(request):
         elif game_manager.isMoviemonEncountered:
             if request.POST.get('A'):
                 game_manager.isMoviemonEncountered = False
-                return redirect('/battle')
+                moviemon_id = game_manager.get_random_movie()
+                return redirect('/battle/' + moviemon_id)
         elif game_manager.isMovieballFound:
             if request.POST.get('A'):
                 game_manager.isMovieballFound = False
@@ -57,8 +58,24 @@ def worldmap(request):
     return render(request, 'moviemon/worldmap.html', context)
 
 
-def battle(request):
-    context = {}
+def battle(request, moviemon_id=None):
+    movie = game_manager.get_movie(moviemon_id)
+    movie_poster_url = movie["Poster"]
+    logger.info(movie)
+
+    if request.method == "POST":
+        if request.POST.get('A'):
+            pass
+        elif request.POST.get('B'):
+            return redirect('/worldmap')
+
+    context = {
+        "moviemon_img_url": movie_poster_url,
+        "player_strength": game_manager.player_strength,
+        "moviemon_strength": round(float(movie["imdbRating"])),
+        "movieballs": game_manager.player_movieballs,
+        # "isMovieballThrown": game_manager.isMovieballThrown
+    }
     return render(request, 'moviemon/battle.html', context)
 
 
