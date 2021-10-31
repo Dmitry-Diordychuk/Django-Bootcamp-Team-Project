@@ -4,6 +4,7 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/moviedex.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
 {% endblock style %}
 
@@ -18,15 +19,19 @@
 		</div>
 	{% else %}
         <table>
-            {% for name, imdb, select in moviedex %}
-                <tr>
-                {% if select %}
-                    <td style="border: 2px solid red">{{name}}</td>
-                {% else %}
-                    <td>{{name}}</td>
+            <tr>
+            {% for link, imdb, select in moviedex %}
+                {% if forloop.counter == 7 %}
+                    <tr>
                 {% endif %}
-                </tr>
+                {% if select %}
+                    <td style="border: 2px solid red"><img class="img_style" src="{{link}}"></td>
+                {% else %}
+                    <td><img class="img_style" src="{{link}}"></td>
+                {% endif %}
             {% endfor %}
+
+            </tr>
         </table>
     {% endif %}
 

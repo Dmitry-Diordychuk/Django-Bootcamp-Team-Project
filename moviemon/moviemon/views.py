@@ -94,23 +94,24 @@ def battle(request, moviemon_id=None):
 
 
 def moviedex(request):
+    if request.POST.get('select'):
+        return redirect('/worldmap')
+
     moviemons_num = len(game_manager.captured_moviemons)
     if moviemons_num == 0:
         return render(request, 'moviemon/moviedex.html', {"moviedex": []})
 
-    select = 0
-    if request.POST.get('select'):
-        return redirect('/worldmap')
+    select = game_manager.moviemon_selected
     if request.POST.get('A'):
         moviemon_id = game_manager.captured_moviemons[select]['imdbID']
         return redirect(f'/moviedex/{moviemon_id}')
-    elif request.POST.get('down.x'):
-        select = select + 1 if select < moviemons_num else select
-    elif request.POST.get('up.x'):
-        select = select - 1 if select > 0 else select
+    elif request.POST.get('right.x'):
+        game_manager.moviemon_selected = select + 1 if select < moviemons_num - 1 else select
+    elif request.POST.get('left.x'):
+        game_manager.moviemon_selected = select - 1 if select > 0 else select
 
-    moviemons = [(moviemon["Title"], moviemon['imdbID'],
-                      True if i == select else False) for i, moviemon in enumerate(game_manager.captured_moviemons)]
+    moviemons = [(moviemon["Poster"], moviemon['imdbID'], True if i == game_manager.moviemon_selected else False)
+                 for i, moviemon in enumerate(game_manager.captured_moviemons)]
     context = {"moviedex": moviemons}
     return render(request, 'moviemon/moviedex.html', context)
 
@@ -119,7 +120,6 @@ def detail(request, moviemon=None):
     if request.method == "POST":
         if request.POST.get('B'):
             return redirect('/moviedex')
-    # imdb = request.GET.get('imdb')
     for a in game_manager.captured_moviemons:
         if a['imdbID'] == moviemon:
             moviemon = ({

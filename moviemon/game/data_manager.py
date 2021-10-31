@@ -26,6 +26,7 @@ class DataManager():
 		self.session = requests.session()
 		self.frame_size = [9, 7]
 		self.selected = 1
+		self.moviemon_selected = 0
 		self.isGameLoaded = False
 
 	def __str__(self):
@@ -195,7 +196,7 @@ Is data loaded?: {6}
 			chance = 1
 		elif chance > 90:
 			chance = 90
-		return 100
+		return chance
 
 
 	def throw_movieball(self, target_id):
