@@ -13,27 +13,36 @@ save_manager = SaveManager()
 
 # Create your views here.
 def index(request):
+    if game_manager.current_page != '/':
+        return redirect(game_manager.current_page)
     if request.method == "POST":
         save_manager.update_files()
         if request.POST.get('A'):
             game_manager.load_default_settings()
+            game_manager.current_page = '/worldmap'
             return redirect('/worldmap')
         elif request.POST.get('B'):
-            return redirect('options/load_game')
+            game_manager.current_page = '/options/load_game'
+            return redirect('/options/load_game')
 
     return render(request, 'moviemon/title_screen.html', {})
 
 
 def worldmap(request):
+    if game_manager.current_page != '/worldmap':
+        return redirect(game_manager.current_page)
     if request.method == "POST":
         if request.POST.get('start'):
+            game_manager.current_page = '/options'
             return redirect('/options')
         elif request.POST.get('select'):
+            game_manager.current_page = '/moviedex'
             return redirect('/moviedex')
         elif game_manager.isMoviemonEncountered:
             if request.POST.get('A'):
                 game_manager.isMoviemonEncountered = False
                 moviemon_id = game_manager.get_random_movie()
+                game_manager.current_page = '/battle/' + moviemon_id
                 return redirect('/battle/' + moviemon_id)
         elif game_manager.isMovieballFound:
             if request.POST.get('A'):
@@ -59,6 +68,8 @@ def worldmap(request):
 
 
 def battle(request, moviemon_id=None):
+    if game_manager.current_page != '/battle/' + moviemon_id:
+        return redirect(game_manager.current_page)
     movie = game_manager.get_movie(moviemon_id)
     movie_poster_url = movie["Poster"]
 
@@ -68,6 +79,7 @@ def battle(request, moviemon_id=None):
                 if request.POST.get('B'):
                     game_manager.isMovieballThrown = False
                     game_manager.isMoviemonCatched = False
+                    game_manager.current_page = '/worldmap'
                     return redirect('/worldmap')
             else:
                 if request.POST.get('A'):
@@ -79,6 +91,7 @@ def battle(request, moviemon_id=None):
                 if game_manager.throw_movieball(moviemon_id):
                     game_manager.isMoviemonCatched = True
             elif request.POST.get('B'):
+                game_manager.current_page = '/worldmap'
                 return redirect('/worldmap')
 
     context = {
@@ -94,7 +107,11 @@ def battle(request, moviemon_id=None):
 
 
 def moviedex(request):
+    if game_manager.current_page != '/moviedex':
+        return redirect(game_manager.current_page)
+
     if request.POST.get('select'):
+        game_manager.current_page = '/worldmap'
         return redirect('/worldmap')
 
     moviemons_num = len(game_manager.captured_moviemons)
@@ -104,6 +121,7 @@ def moviedex(request):
     select = game_manager.moviemon_selected
     if request.POST.get('A'):
         moviemon_id = game_manager.captured_moviemons[select]['imdbID']
+        game_manager.current_page = f'/moviedex/{moviemon_id}'
         return redirect(f'/moviedex/{moviemon_id}')
     elif request.POST.get('right.x'):
         game_manager.moviemon_selected = select + 1 if select < moviemons_num - 1 else select
@@ -117,8 +135,12 @@ def moviedex(request):
 
 
 def detail(request, moviemon=None):
+    if game_manager.current_page != '/moviedex/' + moviemon:
+        return redirect(game_manager.current_page)
+
     if request.method == "POST":
         if request.POST.get('B'):
+            game_manager.current_page = '/moviedex'
             return redirect('/moviedex')
     for a in game_manager.captured_moviemons:
         if a['imdbID'] == moviemon:
@@ -137,11 +159,16 @@ def detail(request, moviemon=None):
 
 
 def options(request):
+    if game_manager.current_page != '/options':
+        return redirect(game_manager.current_page)
+
     if request.method == "POST":
         if request.POST.get('start'):
+            game_manager.current_page = '/worldmap'
             return redirect('/worldmap')
         elif request.POST.get('A'):
-            return redirect('options/save_game')
+            game_manager.current_page = '/options/save_game'
+            return redirect('/options/save_game')
         elif request.POST.get('B'):
             return redirect('/')
     context = {}
@@ -150,12 +177,16 @@ def options(request):
 
 def load(request):
     global game_manager
+    if game_manager.current_page != '/options/load_game':
+        return redirect(game_manager.current_page)
+
     save_manager.update_files()
     a_purpose = 'A - Load, B - Cancel'
     if request.method == "POST":
         if request.POST.get('A'):
             if game_manager.isGameLoaded == True:
                 game_manager.isGameLoaded = False
+                game_manager.current_page = '/worldmap'
                 return redirect('/worldmap')
             slot = None
             if game_manager.selected == 1:
@@ -171,6 +202,7 @@ def load(request):
                 game_manager.isGameLoaded = True
         elif request.POST.get('B') and not game_manager.isGameLoaded:
             game_manager.selected = 1
+            game_manager.current_page = '/'
             return redirect('/')
         elif request.POST.get('up.x'):
             if game_manager.selected > 1:
@@ -192,6 +224,9 @@ def load(request):
 
 
 def save(request):
+    if game_manager.current_page != '/options/save_game':
+        return redirect(game_manager.current_page)
+
     save_manager.update_files()
     if request.method == "POST":
         if request.POST.get('A'):
@@ -211,6 +246,7 @@ def save(request):
             )
         elif request.POST.get('B'):
             game_manager.selected = 1
+            game_manager.current_page = '/options'
             return redirect('/options')
         elif request.POST.get('up.x'):
             if game_manager.selected > 1:

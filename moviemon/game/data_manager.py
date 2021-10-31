@@ -30,6 +30,7 @@ class DataManager():
 		self.selected = 1
 		self.moviemon_selected = 0
 		self.isGameLoaded = False
+		self.current_page = '/'
 
 
 	def __str__(self):
@@ -114,6 +115,7 @@ Is data loaded?: {6}
 		self.isMovieballFound = False
 		self.isMoviemonEncountered = False
 		self.__generate_bushes()
+		self.current_page = '/worldmap'
 		return self
 
 
