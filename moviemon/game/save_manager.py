@@ -70,14 +70,20 @@ class SaveManager():
 
 	def load(self, slot):
 		if slot == 'a':
+			if self.slot_a_file == None:
+				return None
 			with open(join(self.dir, self.slot_a_file), 'rb') as f:
 				self.update_files()
 				return f.read()
 		elif slot == 'b':
+			if self.slot_b_file == None:
+				return None
 			with open(join(self.dir, self.slot_b_file), 'rb') as f:
 				self.update_files()
 				return f.read()
 		elif slot == 'c':
+			if self.slot_c_file == None:
+				return None
 			with open(join(self.dir, self.slot_c_file), 'rb') as f:
 				self.update_files()
 				return f.read()

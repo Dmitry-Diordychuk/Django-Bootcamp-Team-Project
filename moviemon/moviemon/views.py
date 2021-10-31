@@ -83,7 +83,7 @@ def battle(request, moviemon_id=None):
 
     context = {
         "moviemon_img_url": movie_poster_url,
-        "player_strength": game_manager.player_strength,
+        "player_strength": game_manager.get_strength(),
         "moviemon_strength": round(float(movie["imdbRating"])),
         "movieballs": game_manager.player_movieballs,
         'winrate': game_manager.calculate_chance(moviemon_id),
@@ -151,7 +151,7 @@ def options(request):
 def load(request):
     global game_manager
     save_manager.update_files()
-    a_purpose = 'Load'
+    a_purpose = 'A - Load, B - Cancel'
     if request.method == "POST":
         if request.POST.get('A'):
             if game_manager.isGameLoaded == True:
@@ -169,7 +169,7 @@ def load(request):
                 game_manager = DataManager(data)
                 game_manager = game_manager.load()
                 game_manager.isGameLoaded = True
-        elif request.POST.get('B'):
+        elif request.POST.get('B') and not game_manager.isGameLoaded:
             game_manager.selected = 1
             return redirect('/')
         elif request.POST.get('up.x'):
@@ -180,7 +180,7 @@ def load(request):
                 game_manager.selected += 1
 
     if game_manager.isGameLoaded:
-        a_purpose = 'start game'
+        a_purpose = 'A - Start game'
     context = {
         'selected_slot': game_manager.selected,
         'slot_a_status': save_manager.slot_a_status,
