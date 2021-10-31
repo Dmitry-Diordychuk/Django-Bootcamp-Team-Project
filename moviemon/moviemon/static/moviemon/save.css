@@ -1,10 +1,7 @@
-body {
+.slots {
 	font-family: "Tahoma", sans-serif;
 	font-size: 18px;
 	line-height: 25px;
-	color: #164a44;
-
-	background-color: #b2d9d0;
 }
 
 .slots__title {
