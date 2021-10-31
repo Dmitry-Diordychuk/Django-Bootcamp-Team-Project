@@ -88,9 +88,10 @@
 	height: 360px;
 	left: 34px;
 	mix-blend-mode: screen;
-	position: absolute;
 	top: 40px;
 	width: 540px;
+
+	position: relative;
 }
 
 .pads {

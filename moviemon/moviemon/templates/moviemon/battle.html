@@ -6,23 +6,24 @@
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/battle.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/popup.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/shake.css' %}">
 {% endblock style %}
 
 {% block content %}
 <div class="main-container">
 	<div class="container">
 		<div class="box">
-			<img class="image" src="{% static 'moviemon/person_battle.jpg' %}"/>
+			<img class="image" src="{% static 'moviemon/person-battle.png' %}"/>
 			<p>Strength: {{ player_strength }}</p>
 		</div>
 		<div class="box">
-			<img class="image" src="{{ moviemon_img_url }}"/>
+			<img class="image enemy" src="{{ moviemon_img_url }}"/>
 			<p>Strength: {{ moviemon_strength }}</p>
-			<p>Winning rate: {{ winrate }} </p>
 		</div>
+		<p>Movieballs: {{ movieballs }}</p>
+		<p>Winning rate: {{ winrate }} </p>
 	</div>
 	<div class="container">
-		<p>Movieballs: {{ movieballs }}</p>
 		<p>A - Launch movieball</p>
 		<p>B - Back to worldmap</p>
 	</div>
