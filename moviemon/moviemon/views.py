@@ -106,8 +106,9 @@ def moviedex(request):
     if moviemons_num == 0:
         return render(request, 'moviemon/moviedex.html', {"moviedex": []})
     else:
-        moviemons = [(moviemon["Title"], moviemon['imdbID']) for moviemon in game_manager.captured_moviemons]
-    context = {"moviedex": moviemons, 'select': select}
+        moviemons = [(moviemon["Title"], moviemon['imdbID'],
+                      True if i == select else False) for i, moviemon in enumerate(game_manager.captured_moviemons)]
+    context = {"moviedex": moviemons}
     return render(request, 'moviemon/moviedex.html', context)
 
 

@@ -195,7 +195,7 @@ Is data loaded?: {6}
 			chance = 1
 		elif chance > 90:
 			chance = 90
-		return chance
+		return 100
 
 
 	def throw_movieball(self, target_id):

@@ -9,7 +9,7 @@
 
 {% block content %}
 <h1>Moviemons list</h1>
-<ol>
+<table>
     {% if moviedex|length == 0 %}
 		<div class="modal">
 			<h1 class="message">No Moviemons caught yet...<br>
@@ -17,11 +17,15 @@
 			<h1 class="message">Press B: go to worldmap</h1>
 		</div>
 	{% else %}
-        {% for name, imdb in moviedex %}
-        <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
+        {% for name, imdb, select in moviedex %}
+            {% if select %}
+                <tr><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></tr>
+            {% else %}
+                <tr>{{name}}</tr>
+            {% endif %}
         {% endfor %}
 
     {% endif %}
 
-</ol>
+</table>
 {% endblock content %}
