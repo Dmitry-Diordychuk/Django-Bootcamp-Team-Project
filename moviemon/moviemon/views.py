@@ -149,7 +149,7 @@ def options(request):
 
 def load(request):
     global game_manager
-    save_manager.update_files
+    save_manager.update_files()
     a_purpose = 'Load'
     if request.method == "POST":
         if request.POST.get('A'):
@@ -191,7 +191,7 @@ def load(request):
 
 
 def save(request):
-    save_manager.update_files
+    save_manager.update_files()
     if request.method == "POST":
         if request.POST.get('A'):
             data = game_manager.dump()
