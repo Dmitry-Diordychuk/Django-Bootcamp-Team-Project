@@ -5,7 +5,9 @@ import re
 
 class SaveManager():
 	def __init__(self):
-		self.dir = 'moviemon/saved_game'
+		path = __file__
+		path = path.replace('/game/save_manager.py', '')
+		self.dir = path + '/saved_game'
 		self.slot_a_file = None
 		self.slot_b_file = None
 		self.slot_c_file = None
