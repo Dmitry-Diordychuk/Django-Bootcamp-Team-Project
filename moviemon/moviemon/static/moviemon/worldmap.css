@@ -6,10 +6,12 @@
 }
 
 .table-grid {
-	margin: auto;
-	width: 50%;
-	padding-top: 5px;
-	table-layout: fixed
+	margin-left: 9px;
+    width: 97%;
+    height: 99%;
+    padding-top: 5px;
+    table-layout: auto;
+    border-collapse: collapse;
 }
 
 .grid-node {
