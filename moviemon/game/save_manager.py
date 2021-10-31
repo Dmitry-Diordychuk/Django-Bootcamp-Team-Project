@@ -21,6 +21,7 @@ class SaveManager():
 		flag_b = False
 		flag_c = False
 		files = [f for f in listdir(self.dir) if isfile(join(self.dir, f))]
+		print(files)
 		for f in files:
 			if re.match(r'slot[abc]_\d+_\d+\.mmg', f):
 				parts = f.split('_')
