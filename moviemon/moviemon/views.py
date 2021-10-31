@@ -170,6 +170,7 @@ def options(request):
             game_manager.current_page = '/options/save_game'
             return redirect('/options/save_game')
         elif request.POST.get('B'):
+            game_manager.current_page = '/'
             return redirect('/')
     context = {}
     return render(request, 'moviemon/options.html', context)
