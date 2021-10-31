@@ -24,8 +24,8 @@ class DataManager():
 		self.isMovieballThrown = False
 		self.isMoviemonCatched = False
 		self.session = requests.session()
-
 		self.frame_size = [9, 7]
+		self.selected = 1
 
 	def __str__(self):
 		return """

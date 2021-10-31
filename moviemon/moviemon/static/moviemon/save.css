@@ -43,5 +43,5 @@ body {
 }
 
 .selected {
-	opacity: 0.6;
+	border: 2px double #000;
 }

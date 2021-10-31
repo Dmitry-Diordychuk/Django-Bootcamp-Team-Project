@@ -12,9 +12,23 @@
 	<h1 class="slots__title">Save</h1>
 
 	<ul class="save_list">
-	  <li class="save_slot">Save slot A</li>
-	  <li class="save_slot">Save slot B</li>
-	  <li class="save_slot">Save slot C</li>
+	  {% if selected_slot == 1 %}
+		  <li class="selected save_slot">Slot A: {{slot_a_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot A: {{slot_a_status}}</li>
+	  {% endif %}
+	  {% if selected_slot == 2 %}
+		  <li class="selected save_slot">Slot B: {{slot_b_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot B: {{slot_b_status}}</li>
+	  {% endif %}
+	  {% if selected_slot == 3 %}
+		  <li class="selected save_slot">Slot C: {{slot_c_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot C: {{slot_c_status}}</li>
+	  {% endif %}
 	</ul>
+	<p>A - Save</p>
+	<p>B - Cancel</p>
   </section>
 {% endblock content %}

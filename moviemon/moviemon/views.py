@@ -5,15 +5,18 @@ from django.template import loader
 import logging
 
 from game.data_manager import DataManager
+from game.save_manager import SaveManager
 
 logger = logging.getLogger(__name__)
 game_manager = DataManager()
+save_manager = SaveManager()
 
 # Create your views here.
 def index(request):
     if request.method == "POST":
         if request.POST.get('A'):
             game_manager.load_default_settings()
+            save_manager.update_files()
             return redirect('/worldmap')
         elif request.POST.get('B'):
             return redirect('options/load_game')
@@ -143,7 +146,36 @@ def load(request):
 
 def save(request):
     if request.method == "POST":
-        if request.POST.get('B'):
+        if request.POST.get('A'):
+            data = game_manager.dump()
+            slot = None
+            if game_manager.selected == 1:
+                slot = 'a'
+            elif game_manager.selected == 2:
+                slot = 'b'
+            elif game_manager.selected == 3:
+                slot = 'c'
+            save_manager.save(
+                slot,
+                len(game_manager.captured_moviemons),
+                len(game_manager.captured_moviemons) + len(game_manager.film_ids),
+                data
+            )
+        elif request.POST.get('B'):
+            game_manager.selected = 1
             return redirect('/options')
-    context = {}
+        elif request.POST.get('up.x'):
+            if game_manager.selected > 1:
+                game_manager.selected -= 1
+        elif request.POST.get('down.x'):
+            if game_manager.selected < 3:
+                game_manager.selected += 1
+
+    save_manager.update_files
+    context = {
+        'selected_slot': game_manager.selected,
+        'slot_a_status': save_manager.slot_a_status,
+        'slot_b_status': save_manager.slot_b_status,
+        'slot_c_status': save_manager.slot_c_status
+    }
     return render(request, 'moviemon/save.html', context)
