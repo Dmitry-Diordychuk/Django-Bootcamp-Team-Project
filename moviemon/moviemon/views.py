@@ -111,6 +111,7 @@ def moviedex(request):
         return redirect(game_manager.current_page)
 
     if request.POST.get('select'):
+        game_manager.moviemon_selected = 0
         game_manager.current_page = '/worldmap'
         return redirect('/worldmap')
 
