@@ -167,7 +167,7 @@ def load(request):
                 game_manager.isGameLoaded = True
         elif request.POST.get('B'):
             game_manager.selected = 1
-            return redirect('/options')
+            return redirect('/')
         elif request.POST.get('up.x'):
             if game_manager.selected > 1:
                 game_manager.selected -= 1

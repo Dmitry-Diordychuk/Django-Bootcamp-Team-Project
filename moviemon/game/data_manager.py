@@ -52,10 +52,11 @@ Is data loaded?: {6}
 		data = pickle.loads(self.loaded_data)
 		self.player_position = data[0]
 		self.player_movieballs = data[1]
-		self.captured_moviemons = data[2]
-		self.film_ids = data[3]
-		self.grid_size = data[4]
-		self.moviemons_info = data[5]
+		self.player_strength = data[2]
+		self.captured_moviemons = data[3]
+		self.film_ids = data[4]
+		self.grid_size = data[5]
+		self.moviemons_info = data[6]
 		return self
 
 
@@ -63,6 +64,7 @@ Is data loaded?: {6}
 		data = [
 			self.player_position,
 			self.player_movieballs,
+			self.player_strength,
 			self.captured_moviemons,
 			self.film_ids,
 			self.grid_size,
