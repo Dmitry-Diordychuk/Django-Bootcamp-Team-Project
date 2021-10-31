@@ -10,8 +10,10 @@ class DataManager():
 			message = "DataManager Error: " + message
 			super().__init__(message)
 
+
 	def __init__(self, data=None):
 		self.grid_size = None
+		self.bushes = []
 		self.player_position = None
 		self.player_strength = None
 		self.player_movieballs = None
@@ -28,6 +30,7 @@ class DataManager():
 		self.selected = 1
 		self.moviemon_selected = 0
 		self.isGameLoaded = False
+
 
 	def __str__(self):
 		return """
@@ -58,6 +61,7 @@ Is data loaded?: {6}
 		self.film_ids = data[4]
 		self.grid_size = data[5]
 		self.moviemons_info = data[6]
+		self.bushes = data[7]
 		return self
 
 
@@ -69,7 +73,8 @@ Is data loaded?: {6}
 			self.captured_moviemons,
 			self.film_ids,
 			self.grid_size,
-			self.moviemons_info
+			self.moviemons_info,
+			self.bushes
 		]
 		return pickle.dumps(data)
 
@@ -108,6 +113,7 @@ Is data loaded?: {6}
 		self.captured_moviemons = []
 		self.isMovieballFound = False
 		self.isMoviemonEncountered = False
+		self.__generate_bushes()
 		return self
 
 
@@ -136,6 +142,19 @@ Is data loaded?: {6}
 		return left_index, right_index
 
 
+	def __generate_bushes(self):
+		x_max = self.grid_size[0]
+		y_max = self.grid_size[1]
+		total_bushes = x_max * y_max / 10
+		counter = 0
+		while counter < total_bushes:
+			coor = [random.randint(0, x_max), random.randint(0, y_max)]
+			if coor not in self.bushes:
+				self.bushes.append(coor)
+				counter += 1
+		self.bushes
+
+
 	def get_frame(self):
 		gridmap = []
 		for y in range(self.grid_size[1]):
@@ -143,6 +162,8 @@ Is data loaded?: {6}
 			for x in range(self.grid_size[0]):
 				if [x, y] == self.player_position:
 					gridmap[y].append(1)
+				elif [x, y] in self.bushes:
+					gridmap[y].append(2)
 				else:
 					gridmap[y].append(0)
 
@@ -157,7 +178,7 @@ Is data loaded?: {6}
 
 
 	def __check_encounter(self):
-		if random.randrange(0, 100, 1) < 10:
+		if random.randrange(0, 100, 1) < 20:
 			if random.randrange(0, 2, 1) == 0:
 				if len(self.film_ids) != 0:
 					self.isMoviemonEncountered = True
