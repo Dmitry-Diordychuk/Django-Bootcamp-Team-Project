@@ -1,7 +1,7 @@
 {% extends "moviemon/base.html" %}
 {% load static %}
 
-{% block title %}Title screen{% endblock title %}
+{% block title %}Movidex{% endblock title %}
 
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'moviemon/moviedex.css' %}">
@@ -25,12 +25,12 @@
                     <tr>
                 {% endif %}
                 {% if select %}
-                    <td style="border: 2px solid red"><img class="img_style" src="{{link}}"></td>
+                    <td ><img class="img_style" style="border: 2px solid red" src="{{link}}"></td>
                 {% else %}
                     <td><img class="img_style" src="{{link}}"></td>
                 {% endif %}
             {% endfor %}
-
+            </tr>
             </tr>
         </table>
         <div> A - more information </div>

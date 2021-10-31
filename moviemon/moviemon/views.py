@@ -129,7 +129,8 @@ def detail(request, moviemon=None):
                 'Director': a['Director'],
                 'Actors': a['Actors'],
                 'Plot': a['Plot'],
-                'Country': a['Country']
+                'Country': a['Country'],
+                'Rating': a['imdbRating']
             }, a['Poster'])
     context = {'moviemon': moviemon}
     return render(request, 'moviemon/detail.html', context)
