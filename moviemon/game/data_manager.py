@@ -26,6 +26,7 @@ class DataManager():
 		self.session = requests.session()
 		self.frame_size = [9, 7]
 		self.selected = 1
+		self.isGameLoaded = False
 
 	def __str__(self):
 		return """
@@ -48,12 +49,26 @@ Is data loaded?: {6}
 
 
 	def load(self):
-		self = pickle.loads(self.loaded_data)
+		data = pickle.loads(self.loaded_data)
+		self.player_position = data[0]
+		self.player_movieballs = data[1]
+		self.captured_moviemons = data[2]
+		self.film_ids = data[3]
+		self.grid_size = data[4]
+		self.moviemons_info = data[5]
 		return self
 
 
 	def dump(self):
-		return pickle.dumps(self)
+		data = [
+			self.player_position,
+			self.player_movieballs,
+			self.captured_moviemons,
+			self.film_ids,
+			self.grid_size,
+			self.moviemons_info
+		]
+		return pickle.dumps(data)
 
 
 	def get_random_movie(self):

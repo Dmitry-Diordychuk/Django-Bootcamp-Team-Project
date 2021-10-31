@@ -14,9 +14,9 @@ save_manager = SaveManager()
 # Create your views here.
 def index(request):
     if request.method == "POST":
+        save_manager.update_files()
         if request.POST.get('A'):
             game_manager.load_default_settings()
-            save_manager.update_files()
             return redirect('/worldmap')
         elif request.POST.get('B'):
             return redirect('options/load_game')
@@ -140,11 +140,50 @@ def options(request):
 
 
 def load(request):
-    context = {}
+    global game_manager
+    save_manager.update_files
+    a_purpose = 'Load'
+    if request.method == "POST":
+        if request.POST.get('A'):
+            if game_manager.isGameLoaded == True:
+                game_manager.isGameLoaded = False
+                return redirect('/worldmap')
+            slot = None
+            if game_manager.selected == 1:
+                slot = 'a'
+            elif game_manager.selected == 2:
+                slot = 'b'
+            elif game_manager.selected == 3:
+                slot = 'c'
+            data = save_manager.load(slot)
+            if data != None:
+                game_manager = DataManager(data)
+                game_manager = game_manager.load()
+                game_manager.isGameLoaded = True
+        elif request.POST.get('B'):
+            game_manager.selected = 1
+            return redirect('/options')
+        elif request.POST.get('up.x'):
+            if game_manager.selected > 1:
+                game_manager.selected -= 1
+        elif request.POST.get('down.x'):
+            if game_manager.selected < 3:
+                game_manager.selected += 1
+
+    if game_manager.isGameLoaded:
+        a_purpose = 'start game'
+    context = {
+        'selected_slot': game_manager.selected,
+        'slot_a_status': save_manager.slot_a_status,
+        'slot_b_status': save_manager.slot_b_status,
+        'slot_c_status': save_manager.slot_c_status,
+        'a_purpose': a_purpose
+    }
     return render(request, 'moviemon/load.html', context)
 
 
 def save(request):
+    save_manager.update_files
     if request.method == "POST":
         if request.POST.get('A'):
             data = game_manager.dump()
@@ -171,7 +210,6 @@ def save(request):
             if game_manager.selected < 3:
                 game_manager.selected += 1
 
-    save_manager.update_files
     context = {
         'selected_slot': game_manager.selected,
         'slot_a_status': save_manager.slot_a_status,

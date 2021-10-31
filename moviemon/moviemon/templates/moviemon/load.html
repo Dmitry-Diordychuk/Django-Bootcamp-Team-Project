@@ -4,9 +4,31 @@
 {% block title %}Title screen{% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'moviemon/save.css' %}">
 {% endblock style %}
 
 {% block content %}
-<h1>Load</h1>
-<p>comming soon...</p>
+<section class="slots">
+	<h1 class="slots__title">Load</h1>
+
+	<ul class="save_list">
+	  {% if selected_slot == 1 %}
+		  <li class="selected save_slot">Slot A: {{slot_a_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot A: {{slot_a_status}}</li>
+	  {% endif %}
+	  {% if selected_slot == 2 %}
+		  <li class="selected save_slot">Slot B: {{slot_b_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot B: {{slot_b_status}}</li>
+	  {% endif %}
+	  {% if selected_slot == 3 %}
+		  <li class="selected save_slot">Slot C: {{slot_c_status}}</li>
+	  {% else %}
+		  <li class="save_slot">Slot C: {{slot_c_status}}</li>
+	  {% endif %}
+	</ul>
+	<p>A - {{ a_purpose }}</p>
+	<p>B - Cancel</p>
+  </section>
 {% endblock content %}
