@@ -178,12 +178,15 @@ def options(request):
 
 def load(request):
     global game_manager
+    logger.info(game_manager.current_page)
     if game_manager.current_page != '/options/load_game':
         return redirect(game_manager.current_page)
 
     save_manager.update_files()
     a_purpose = 'A - Load, B - Cancel'
+    logger.info('Here')
     if request.method == "POST":
+        logger.info('Post')
         if request.POST.get('A'):
             if game_manager.isGameLoaded == True:
                 game_manager.isGameLoaded = False
@@ -201,7 +204,9 @@ def load(request):
                 game_manager = DataManager(data)
                 game_manager = game_manager.load()
                 game_manager.isGameLoaded = True
+                game_manager.current_page = "/options/load_game"
         elif request.POST.get('B') and not game_manager.isGameLoaded:
+            logger.info('B')
             game_manager.selected = 1
             game_manager.current_page = '/'
             return redirect('/')
@@ -211,7 +216,7 @@ def load(request):
         elif request.POST.get('down.x'):
             if game_manager.selected < 3:
                 game_manager.selected += 1
-
+    logger.info('end')
     if game_manager.isGameLoaded:
         a_purpose = 'A - Start game'
     context = {
