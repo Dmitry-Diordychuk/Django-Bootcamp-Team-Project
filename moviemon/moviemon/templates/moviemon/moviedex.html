@@ -10,7 +10,7 @@
 {% block content %}
 <h1>Moviemons list</h1>
 <ol>
-    {% if moviedex|length == 0%}
+    {% if moviedex|length == 0 %}
 		<div class="modal">
 			<h1 class="message">No Moviemons caught yet...<br>
                 go beat em all!</h1>
@@ -20,6 +20,7 @@
         {% for name, imdb in moviedex %}
         <li><a href="/moviemon/detail?imdb={{imdb}}">{{name}}</a></li>
         {% endfor %}
+
     {% endif %}
 
 </ol>

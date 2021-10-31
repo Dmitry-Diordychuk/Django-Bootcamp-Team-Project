@@ -94,14 +94,20 @@ def battle(request, moviemon_id=None):
 
 
 def moviedex(request):
-    if request.POST.get('B'):
+    select = 0
+    moviemons_num = len(game_manager.captured_moviemons)
+    if request.POST.get('select'):
         return redirect('/worldmap')
+    elif request.POST.get('down.x'):
+        select = select + 1 if select < moviemons_num else select
+    elif request.POST.get('up.x'):
+        select = select - 1 if select > 0 else select
 
-    if len(game_manager.captured_moviemons) == 0:
+    if moviemons_num == 0:
         return render(request, 'moviemon/moviedex.html', {"moviedex": []})
     else:
         moviemons = [(moviemon["Title"], moviemon['imdbID']) for moviemon in game_manager.captured_moviemons]
-    context = {"moviedex": moviemons}
+    context = {"moviedex": moviemons, 'select': select}
     return render(request, 'moviemon/moviedex.html', context)
 
 
@@ -111,7 +117,6 @@ def detail(request):
             return redirect('/moviedex')
     imdb = request.GET.get('imdb')
     moviemon = {}
-
     for a in game_manager.captured_moviemons:
         if a['imdbID'] == imdb:
             moviemon = ({
