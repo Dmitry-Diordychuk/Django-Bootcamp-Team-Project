@@ -115,7 +115,6 @@ Is data loaded?: {6}
 		self.isMovieballFound = False
 		self.isMoviemonEncountered = False
 		self.__generate_bushes()
-		self.current_page = '/worldmap'
 		return self
 
 

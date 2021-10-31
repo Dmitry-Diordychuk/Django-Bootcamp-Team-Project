@@ -108,7 +108,6 @@ def battle(request, moviemon_id=None):
 
 def moviedex(request):
     if game_manager.current_page != '/moviedex':
-        game_manager.current_page = '/moviedex'
         return redirect(game_manager.current_page)
 
     if request.POST.get('select'):
