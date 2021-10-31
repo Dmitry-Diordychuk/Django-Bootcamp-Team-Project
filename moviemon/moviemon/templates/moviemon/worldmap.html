@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<p class="movieballs">Movieballs: {{ movieballs }}</p>
+
 
 <table class="table-grid">
 	{% for row in frame %}
@@ -27,7 +27,7 @@
 	</tr>
 	{% endfor %}
 </table>
-
+<p class="movieballs">Movieballs: {{ movieballs }}</p>
 {% if isMoviemonEncountered %}
 	<div class="modal">
 		<h1 class="message">Moviemon appeared!</h1>
